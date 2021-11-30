@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "whatsappany-ionic",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
