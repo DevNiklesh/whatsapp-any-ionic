@@ -1,6 +1,7 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "whatsappany-ionic",
-	"webDir": "www",
-	"bundledWebRuntime": false
+  "appId": "com.whatsapp.any",
+  "appName": "Whatsapp Any",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "linuxAndroidStudioPath": "/snap/android-studio/current/android-studio/bin/studio.sh"
 }

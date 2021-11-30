@@ -1,20 +1,40 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar class="ion-text-center" color='primary'>
+  <ion-title>Whatsapp Any</ion-title>
+</ion-toolbar>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- fab placed to the bottom end -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)='openForm()'>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="ion-padding" style="font-weight: bold; font-size: large;">All Phone Numbers</div>
+
+  <div id='container' class="ion-padding" *ngIf="!allPersons.length">
+    <ion-note>Click on + button to Whatsapp any number without saving!</ion-note>
   </div>
+
+
+  <ion-list>
+    <ion-item *ngFor="let p of allPersons">
+      <ion-label>
+        <ion-text style="font-size: large;">{{ p.phoneNo }}</ion-text><br>
+        <ion-note>{{ p.note }}</ion-note>
+      </ion-label>
+      <ion-button slot="end" fill="clear" (click)='removePerson(p)'>
+        <ion-icon name='trash' slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
+<!--
+<div class="ion-text-center" style='font-size: 12px; margin-bottom: 2%;'>
+  <ion-icon name="heart" color='danger' slot="start"></ion-icon>
+  <ion-text color='medium' class="ion-text-center">
+    Developed by Dev Niklesh
+  </ion-text>
+</div> -->

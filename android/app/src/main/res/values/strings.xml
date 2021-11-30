@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Whatsapp Any</string>
+    <string name="title_activity_main">Whatsapp Any</string>
+    <string name="package_name">com.whatsapp.any</string>
+    <string name="custom_url_scheme">com.whatsapp.any</string>
+</resources>
