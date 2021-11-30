@@ -59,7 +59,7 @@ export class HomePage {
           },
         },
         {
-          text: 'Ok',
+          text: 'Open Chat',
           handler: async (person: Person) => {
             if (!person.phoneNo) {
               this.presentToastWithOptions(
@@ -74,11 +74,8 @@ export class HomePage {
               return;
             }
             await this.storageService.setNewPersion(person);
-            this.getAllPersion();
-            this.document.location.href = `https://wa.me/91${person.phoneNo}`;
-            // this.document.location.href = `https://wa.me/91${
-            //   person.phoneNo
-            // }?text=${encodeURI(person.note)}`;
+            await this.getAllPersion();
+            this.openWhatsapp(person);
           },
         },
       ],
@@ -87,9 +84,35 @@ export class HomePage {
     await alert.present();
   }
 
+  openWhatsapp(p: Person) {
+    this.document.location.href = `https://wa.me/91${p.phoneNo}`;
+    // this.document.location.href = `https://wa.me/91${
+    //   person.phoneNo
+    // }?text=${encodeURI(person.note)}`;
+  }
+
   async removePerson(p: Person) {
-    await this.storageService.removePerson(p);
+    await this.storageService.removePerson(p.phoneNo);
     await this.getAllPersion();
+  }
+
+  async deleteAll() {
+    const alert = await this.alertCtrl.create({
+      header: 'Are you sure!',
+      message: 'Delete all numbers?',
+      buttons: [
+        { text: 'cancel', role: 'cancel' },
+        {
+          text: 'Yes, Delete',
+          handler: async () => {
+            await this.storageService.deleteAll();
+            await this.getAllPersion();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   async presentToastWithOptions(msg: string) {

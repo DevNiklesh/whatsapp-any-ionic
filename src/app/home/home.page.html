@@ -1,6 +1,13 @@
-<ion-toolbar class="ion-text-center" color='primary'>
-  <ion-title>Whatsapp Any</ion-title>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>Whatsapp Any</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)='deleteAll()'>
+        <ion-icon name='trash-outline' slot="icon-only">Delete All</ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
 
@@ -11,23 +18,34 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div class="ion-padding" style="font-weight: bold; font-size: large;">All Phone Numbers</div>
+  <div class="ion-padding" style="font-weight: bold; font-size: large;">
+    <ion-text>All Phone Numbers</ion-text>&nbsp;&nbsp;
+    <ion-note>(found {{ allPersons.length }})</ion-note>
+  </div>
 
   <div id='container' class="ion-padding" *ngIf="!allPersons.length">
     <ion-note>Click on + button to Whatsapp any number without saving!</ion-note>
   </div>
 
 
-  <ion-list>
-    <ion-item *ngFor="let p of allPersons">
-      <ion-label>
-        <ion-text style="font-size: large;">{{ p.phoneNo }}</ion-text><br>
-        <ion-note>{{ p.note }}</ion-note>
-      </ion-label>
-      <ion-button slot="end" fill="clear" (click)='removePerson(p)'>
-        <ion-icon name='trash' slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-item>
+  <ion-list *ngIf="allPersons.length">
+    <ion-item-sliding *ngFor="let p of allPersons">
+
+      <ion-item button (click)='openWhatsapp(p)'>
+        <ion-label>
+          <ion-note style="font-size: small;">{{ p.createdAt | date }}</ion-note><br>
+          <ion-text style="font-size: large;">{{ p.phoneNo }}</ion-text><br>
+          <ion-note>{{ p.note }}</ion-note>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)='removePerson(p)'>
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
   </ion-list>
 
 </ion-content>
