@@ -1,0 +1,27 @@
+<ion-content class="ion-padding ion-margin-top">
+  <div class="larger bold ion-margin-top">
+    <ion-text>WhatsApp Any</ion-text>
+  </div>
+  <div class='twitter-card ion-padding ion-margin-top' style="cursor: pointer;" (click)='openTwitter()'>
+    <div style="display: inline-flex; width: 100%;">
+      <div>
+        <img src='https://pbs.twimg.com/profile_images/1482269985993261059/CPMg-Og2_400x400.jpg' class="rounded">
+      </div>
+      <div style="padding-left: 3%;">
+        <ion-text class="large bold">By Dev Niklesh</ion-text><br>
+        <ion-text style="color: #1DA1F2">follow on twitter <ion-icon name="logo-twitter"></ion-icon></ion-text>
+      </div>
+    </div>
+  </div>
+
+  <div class="ion-margin-top ion-padding-top">
+    <div class="larger bold">
+      <ion-text>Tell a friend</ion-text>
+    </div>
+    <ion-button class="ion-margin-top" size='large' style="--background: #128C7E" expand="block" (click)='shareWhatsappAny()'>
+      <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+      Share on WhatsApp
+    </ion-button>
+  </div>
+</ion-content>
+

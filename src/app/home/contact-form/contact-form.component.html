@@ -1,0 +1,34 @@
+<ion-content class="ion-padding">
+  <div class="ion-margin-top">
+    <ion-text class="larger bold">New Contact</ion-text>
+  </div>
+  <ion-item fill="outline" mode="md" class="ion-margin-top">
+    <ion-label position="floating">Phone Number</ion-label>
+    <ion-input [(ngModel)]='phoneNo' type="number" min="10" max="10" autofocus='true' inputmode="numeric"></ion-input>
+  </ion-item>
+  <div *ngIf="errorMsg">
+    <ion-text color="danger">{{ this.errorMsg }}</ion-text>
+  </div>
+
+  <ion-item fill="outline" mode="md" class="ion-margin-top">
+    <ion-label position="floating">Name</ion-label>
+    <ion-input [(ngModel)]='name' type="text" inputmode="text"></ion-input>
+  </ion-item>
+
+  <ion-item fill="outline" mode="md" class="ion-margin-top">
+    <ion-label position="floating">Note</ion-label>
+    <ion-textarea [(ngModel)]='note' placeholder="Enter any notes here" rows="3"></ion-textarea>
+  </ion-item>
+
+
+
+  <div class="ion-margin-top">
+    <ion-button expand="block" (click)='saveContact()'>
+      Save
+    </ion-button>
+
+    <ion-button expand="block" (click)='saveContact(true)'>
+      Save & Open WhatsApp
+    </ion-button>
+  </div>
+</ion-content>
