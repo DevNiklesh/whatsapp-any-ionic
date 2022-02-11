@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Person, StorageService } from 'src/app/services/storage.service';
 
@@ -8,6 +8,7 @@ import { Person, StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./contact-form.component.scss'],
 })
 export class ContactFormComponent implements OnInit {
+  @Input() editPerson: Person;
   phoneNo: string;
   name: string;
   note: string;
@@ -19,7 +20,13 @@ export class ContactFormComponent implements OnInit {
     private toastCtrl: ToastController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.editPerson) {
+      this.phoneNo = this.editPerson.phoneNo;
+      this.name = this.editPerson.name;
+      this.note = this.editPerson.note;
+    }
+  }
 
   async saveContact(shouldOpenChat = false) {
     if (!this.phoneNo) {
@@ -31,16 +38,31 @@ export class ContactFormComponent implements OnInit {
       return;
     }
 
-    try {
-      await this.storageService.setNewPersion(
-        this.phoneNo,
-        this.name,
-        this.note
-      );
-    } catch (err) {
-      this.toastCtrl.create({
-        message: 'Oops..! Contact not saved. Please try again!',
-      });
+    if (!this.editPerson) {
+      try {
+        await this.storageService.setNewPerson(
+          this.phoneNo,
+          this.name,
+          this.note
+        );
+      } catch (err) {
+        this.toastCtrl.create({
+          message: 'Oops..! Contact not saved. Please try again!',
+        });
+      }
+    } else {
+      try {
+        await this.storageService.updatePersonById(
+          this.editPerson.id,
+          this.phoneNo,
+          this.name,
+          this.note
+        );
+      } catch (err) {
+        this.toastCtrl.create({
+          message: 'Oops..! Contact not updated. Please try again!',
+        });
+      }
     }
 
     if (shouldOpenChat) {

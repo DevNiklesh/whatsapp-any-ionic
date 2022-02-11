@@ -1,9 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import {
-  ToastController,
-  ModalController,
-} from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular';
 import { Person, StorageService } from '../services/storage.service';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { InfoComponent } from './info/info.component';
@@ -15,6 +12,7 @@ import { InfoComponent } from './info/info.component';
 })
 export class HomePage {
   allPersons: Person[] = [];
+  selectedIndex: number;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -31,19 +29,24 @@ export class HomePage {
     this.allPersons = await this.storageService.getAllNumbers();
   }
 
-  openWhatsapp(phoneNo) {
+  openWhatsapp(phoneNo: string) {
     this.document.location.href = `https://wa.me/91${phoneNo}`;
     // this.document.location.href = `https://wa.me/91${
     //   person.phoneNo
     // }?text=${encodeURI(person.note)}`;
   }
 
-  async openForm() {
+  callNow(phoneNo: string) {
+    window.open(`tel:${phoneNo}`);
+  }
+
+  async openForm(personToEdit: Person = null) {
     const modal = await this.modalCtrl.create({
       component: ContactFormComponent,
       initialBreakpoint: 0.5,
       breakpoints: [0, 0.5, 0.8],
       keyboardClose: false,
+      componentProps: personToEdit === null ? {} : { editPerson: personToEdit },
     });
 
     await modal.present();

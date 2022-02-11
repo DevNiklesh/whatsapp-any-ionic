@@ -15,6 +15,7 @@ export interface Person {
 })
 export class StorageService {
   database: SQLiteObject;
+  numbersTable = 'numbers';
 
   constructor(private sqlite: SQLite) {
     this.initializeDatabase();
@@ -24,7 +25,7 @@ export class StorageService {
     return new Promise((resolve, reject) => {
       this.database.transaction((tx) => {
         tx.executeSql(
-          `SELECT * FROM numbers ORDER BY "createdAt"`,
+          `SELECT * FROM ${this.numbersTable} ORDER BY "createdAt"`,
           [],
           (_, result) => {
             const data = [];
@@ -39,14 +40,13 @@ export class StorageService {
     });
   }
 
-  async setNewPersion(phoneNo: string, name: string, note: string) {
+  async setNewPerson(phoneNo: string, name: string, note: string) {
     return new Promise((resolve, reject) => {
       this.database.transaction((tx) => {
         tx.executeSql(
-          'INSERT INTO numbers ("phoneNo", name, note, "createdAt") VALUES (?,?,?,?)',
+          `INSERT INTO ${this.numbersTable} ("phoneNo", name, note, "createdAt") VALUES (?,?,?,?)`,
           [phoneNo, name, note, new Date()],
           (_, result) => {
-            console.log('insertId: ' + result.insertId); // New Id number
             resolve(null);
           }
         );
@@ -54,11 +54,18 @@ export class StorageService {
     });
   }
 
+  async updatePersonById(personId: number, phoneNo: string, name: string, note: string) {
+    return this.database.executeSql(
+      `UPDATE ${this.numbersTable} SET "phoneNo" = ?, name = ?, note = ? WHERE "id" = ?`,
+      [phoneNo, name, note, personId]
+    );
+  }
+
   async deletePersonById(id: number) {
     return new Promise((resolve, reject) => {
       this.database.transaction((tx) => {
         tx.executeSql(
-          'DELETE FROM numbers WHERE "id" = ?',
+          `DELETE FROM ${this.numbersTable} WHERE "id" = ?`,
           [id],
           (_, result) => {
             console.log('Rows affected: ' + result.rowsAffected); // 1

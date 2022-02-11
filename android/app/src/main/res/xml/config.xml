@@ -6,5 +6,9 @@
     <param name="android-package" value="io.sqlc.SQLitePlugin"/>
   </feature>
 
+  <feature name="CallNumber">
+    <param name="android-package" value="mx.ferreyra.callnumber.CFCallNumber"/>
+  </feature>
+
   
 </widget>
